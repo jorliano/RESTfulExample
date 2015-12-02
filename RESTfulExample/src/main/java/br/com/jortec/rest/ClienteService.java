@@ -1,7 +1,6 @@
 package br.com.jortec.rest;
 
 import java.awt.CardLayout;
-import java.util.Base64;
 import java.util.Date;
 
 import javax.management.StringValueExp;
@@ -84,7 +83,7 @@ public class ClienteService {
 		 if(cliente != null){
 			 logger.info("Cliente tem dados ");
 			//Pega os valores e compara	                
-			 Cliente c = dao.buscaPor(cliente.getLogin(), cliente.getSenha());
+			 Cliente c = dao.buscaPorLoginNome(cliente.getLogin(), cliente.getNome());
 			 if(c == null){
 				 //salva o cliente no banco de dados		        
 			      dao.salvar(cliente);

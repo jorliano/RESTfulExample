@@ -79,7 +79,7 @@ public class ClienteWeb {
 			if (us != null) {
 				logger.info("Cliente tem dados " + us.getNome());
 				// Pega os valores e compara				
-				Usuario usuario = dao.buscaPor(us.getLogin(), us.getSenha());
+				Usuario usuario = dao.buscaPorLoginNome(us.getLogin(), us.getNome());
 				if (usuario == null) {
 					// salva o usuario no banco de dados
 					dao.salvar(us);
@@ -149,9 +149,18 @@ public class ClienteWeb {
 	@GET
 	@Path("/deletarCliente/{id}")
 	@Produces("text/plain")
-	public String removeCliente(@PathParam("id") int id) {
+	public String removeCliente(@PathParam("id") long id) {
 		Cliente c = new ClienteDao().buscaPorId(id);
 		new ClienteDao().deletar(c);
+		return "Deletado com sucesso";
+	}
+	
+	@GET
+	@Path("/deletarEmergencia/{id}")
+	@Produces("text/plain")
+	public String removeEmergencia(@PathParam("id") long id) {
+		Emergencia em = new EmergenciaDao().buscaPorId(id);
+		new EmergenciaDao().deletar(em);
 		return "Deletado com sucesso";
 	}
 	

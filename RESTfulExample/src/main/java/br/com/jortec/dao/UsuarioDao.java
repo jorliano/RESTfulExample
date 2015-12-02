@@ -24,7 +24,7 @@ public class UsuarioDao {
 		try {
 			manager.getTransaction().begin();
 			logger.info("trasação chamada");
-			manager.persist(manager.merge(usuario));
+			manager.persist(usuario);
 			logger.info("dados persistidos");
 			manager.getTransaction().commit();
 			logger.info("comitado");
@@ -48,7 +48,7 @@ public class UsuarioDao {
 		logger.info("Metodo logar chamado");
 		try {
 			manager.getTransaction().begin();			
-			manager.remove(us);				
+			manager.remove(manager.merge(us));				
 			manager.getTransaction().commit();
 			logger.info("dados deletados");
 		} catch (Exception e) {
@@ -71,12 +71,25 @@ public class UsuarioDao {
 		}
 	}
 
+	public Usuario buscaPorLoginNome(String login, String nome) {
+		logger.info("pesquisa usuario chamada login : "+login+" nome : "+nome);
+		try {
+			return manager
+					.createQuery(
+							"select u from Usuario u "
+									+ "where login = :login and nome =:nome",
+							Usuario.class).setParameter("login", login)
+					.setParameter("nome", nome).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 	
 	public Usuario buscaPorId(long id) {
 
 		try {
 			return manager
-					.createQuery("select u from Usuario u " + "where id = :id",
+					.createQuery("select u from Usuario u where id = :id",
 							Usuario.class).setParameter("id", id)
 					.getSingleResult();
 		} catch (NoResultException e) {
@@ -89,6 +102,7 @@ public class UsuarioDao {
 		return manager.createQuery("select u from Usuario u order by id", Usuario.class)
 				.getResultList();
 	}
+	
 	
 	
 

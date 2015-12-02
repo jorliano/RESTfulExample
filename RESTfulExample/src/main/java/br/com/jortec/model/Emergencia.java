@@ -3,6 +3,7 @@ package br.com.jortec.model;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +27,7 @@ public class Emergencia {
    
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)		
-	private int id;
+	private long id;
 	private String tipo;
 	private String longitude;
 	private String latitude;
@@ -42,16 +43,16 @@ public class Emergencia {
 	private Date data;
 	private String hora;
 	
-	@ManyToOne	
+	@ManyToOne
 	@JoinColumn(name=" id_cliente", nullable=false, insertable=true, updatable=true)
 	private Cliente cliente;
  
 	
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

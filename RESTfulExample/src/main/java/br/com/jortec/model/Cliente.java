@@ -33,12 +33,12 @@ public class Cliente  implements Serializable                                   
 	private String Cidade;
 	private String Sexo;
     
-    //@Column(unique=true)  
+    
    /* @OneToMany(mappedBy="cliente", targetEntity= Emergencia.class, 
     		fetch = FetchType.LAZY, cascade = CascadeType.ALL)      
     private List<Emergencia> emergencia;
-    
     */
+   
     public long getId() {
 		return id;
 	}
@@ -103,13 +103,13 @@ public class Cliente  implements Serializable                                   
 		Sexo = sexo;
 	}
     
-/*	public List<Emergencia> getEmergencia() {
+  /*	public List<Emergencia> getEmergencia() {
 		return emergencia;
 	}
 
 	public void setEmergencia(List<Emergencia> emergencia) {
 		this.emergencia = emergencia;
-	}
-	*/
+	}*/
+	
 	
 }

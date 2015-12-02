@@ -24,7 +24,7 @@ public class ClienteDao {
 		try {
 			manager.getTransaction().begin();
 			logger.info("trasação chamada");
-			manager.persist(manager.merge(cliente));
+			manager.persist(cliente);
 			logger.info("dados persistidos");
 			manager.getTransaction().commit();
 			logger.info("comitado");
@@ -36,7 +36,7 @@ public class ClienteDao {
 		logger.info("Metodo logar chamado");
 		try {
 			manager.getTransaction().begin();		
-			manager.merge(c);			
+			manager.remove( manager.merge(c));			
 			manager.getTransaction().commit();
 			logger.info("dados alterrados");
 		} catch (Exception e) {
@@ -59,12 +59,27 @@ public class ClienteDao {
 			return null;
 		}
 	}
+	
+	public Cliente buscaPorLoginNome(String login, String nome) {
+		logger.info("buscaPor cliente " + login+" "+ nome);
+		try {
+			return manager
+					.createQuery(
+							"select c from Cliente c "
+									+ "where login = :login and nome =:nome",
+							Cliente.class).setParameter("login", login)
+					.setParameter("nome", nome).getSingleResult();
+		} catch (NoResultException e) {
+			logger.error("falhou ao buscar dados");
+			return null;
+		}
+	}
 
 	public Cliente buscaPorId(long id) {
 
 		try {
 			return manager
-					.createQuery("select c from Cliente c " + "where id = :id",
+					.createQuery("select c from Cliente c where id = :id",
 							Cliente.class).setParameter("id", id)
 					.getSingleResult();
 		} catch (NoResultException e) {
